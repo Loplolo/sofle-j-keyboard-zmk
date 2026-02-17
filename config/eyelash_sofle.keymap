@@ -42,7 +42,7 @@
     };
 
     behaviors {
-        // Outer Left Thumb: Tap = Enter, Hold = Layer 1
+        // Tap = Enter, Hold = Layer 1
         lt_ent_layer1: lt_ent_layer1 {
             compatible = "zmk,behavior-hold-tap";
             label = "LAYER_TAP_ENTER_L1";
@@ -53,7 +53,7 @@
             bindings = <&mo>, <&kp>;
         };
 
-        // Outer Right Thumb: Tap = Enter, Hold = Layer 2
+        // Tap = Enter, Hold = Layer 2
         lt_ent_layer2: lt_ent_layer2 {
             compatible = "zmk,behavior-hold-tap";
             label = "LAYER_TAP_ENTER_L2";
@@ -66,12 +66,37 @@
     };
 
     macros {
-        // Accents for US-International Layout (Right Alt + Grave + Letter)
-        a_grave: a_grave { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp RALT &kp GRAVE &kp A>; label = "A_GRAVE"; };
-        e_grave: e_grave { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp RALT &kp GRAVE &kp E>; label = "E_GRAVE"; };
-        i_grave: i_grave { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp RALT &kp GRAVE &kp I>; label = "I_GRAVE"; };
-        o_grave: o_grave { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp RALT &kp GRAVE &kp O>; label = "O_GRAVE"; };
-        u_grave: u_grave { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp RALT &kp GRAVE &kp U>; label = "U_GRAVE"; };
+        // Accents for AltGr International (Hold RAlt, Tap Grave, Release RAlt, Tap Letter)
+        a_grave: a_grave { 
+            compatible = "zmk,behavior-macro"; 
+            #binding-cells = <0>; 
+            label = "A_GRAVE";
+            bindings = <&macro_press &kp RALT>, <&macro_tap &kp GRAVE>, <&macro_release &kp RALT>, <&macro_tap &kp A>;
+        };
+        e_grave: e_grave { 
+            compatible = "zmk,behavior-macro"; 
+            #binding-cells = <0>; 
+            label = "E_GRAVE";
+            bindings = <&macro_press &kp RALT>, <&macro_tap &kp GRAVE>, <&macro_release &kp RALT>, <&macro_tap &kp E>;
+        };
+        i_grave: i_grave { 
+            compatible = "zmk,behavior-macro"; 
+            #binding-cells = <0>; 
+            label = "I_GRAVE";
+            bindings = <&macro_press &kp RALT>, <&macro_tap &kp GRAVE>, <&macro_release &kp RALT>, <&macro_tap &kp I>;
+        };
+        o_grave: o_grave { 
+            compatible = "zmk,behavior-macro"; 
+            #binding-cells = <0>; 
+            label = "O_GRAVE";
+            bindings = <&macro_press &kp RALT>, <&macro_tap &kp GRAVE>, <&macro_release &kp RALT>, <&macro_tap &kp O>;
+        };
+        u_grave: u_grave { 
+            compatible = "zmk,behavior-macro"; 
+            #binding-cells = <0>; 
+            label = "U_GRAVE";
+            bindings = <&macro_press &kp RALT>, <&macro_tap &kp GRAVE>, <&macro_release &kp RALT>, <&macro_tap &kp U>;
+        };
     };
 
     combos {
@@ -89,36 +114,33 @@
         compatible = "zmk,keymap";
 
         // Layer 0: Default / Home
-        // 5-Way: Arrows (Up/Down/Left/Right) + Center Enter
-        // Thumbs: Inner=Space, Outer=Enter(Layer)
+        // Thumbs are swapped: [Space] then [Enter/Layer]
         layer0 {
             display-name = "HOME";
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
             bindings = <
-&kp GRAVE   &kp N1   &kp N2       &kp N3       &kp N4             &kp N5     &kp ENTER          &kp N6     &kp N7              &kp N8     &kp N9   &kp N0    &kp MINUS
-&kp TAB     &kp Q    &kp W        &kp E        &kp R              &kp T      &kp UP             &kp Y      &kp U               &kp I      &kp O    &kp P     &kp BSPC
-&kp LCTRL   &kp A    &kp S        &kp D        &kp F              &kp G      &kp DOWN           &kp H      &kp J               &kp K      &kp L    &kp SEMI  &kp APOS
-&kp LSHFT   &kp Z    &kp X        &kp C        &kp V              &kp B      &kp LEFT           &kp N      &kp M               &kp COMMA  &kp DOT  &kp FSLH  &kp BSLH
-&kp C_MUTE  &kp ESC  &kp LEFT_GUI &kp LEFT_ALT &lt_ent_layer1 1 ENTER &kp SPACE  &kp RIGHT          &kp SPACE  &lt_ent_layer2 2 ENTER  &kp LBKT   &kp RBKT &kp EQUAL
+&kp GRAVE   &kp N1   &kp N2       &kp N3       &kp N4       &kp N5     &kp ENTER          &kp N6                   &kp N7       &kp N8     &kp N9   &kp N0    &kp MINUS
+&kp TAB     &kp Q    &kp W        &kp E        &kp R        &kp T      &kp UP             &kp Y                    &kp U        &kp I      &kp O    &kp P     &kp BSPC
+&kp LCTRL   &kp A    &kp S        &kp D        &kp F        &kp G      &kp DOWN           &kp H                    &kp J        &kp K      &kp L    &kp SEMI  &kp APOS
+&kp LSHFT   &kp Z    &kp X        &kp C        &kp V        &kp B      &kp LEFT           &kp N                    &kp M        &kp COMMA  &kp DOT  &kp FSLH  &kp BSLH
+&kp C_MUTE  &kp ESC  &kp LEFT_GUI &kp LEFT_ALT &kp SPACE    &lt_ent_layer1 1 ENTER        &kp RIGHT                &lt_ent_layer2 2 ENTER   &kp SPACE  &kp LBKT  &kp RBKT &kp EQUAL
             >;
         };
 
         // Layer 1: Function / Mouse
-        // 5-Way: Mouse Move + Left Click
         layer_1 {
             display-name = "FUNCTION";
             sensor-bindings = <&scroll_encoder>;
             bindings = <
-&kp F1           &kp F2           &kp F3           &kp F4           &kp F5     &kp F6     &mkp LCLK        &trans     &kp F7    &kp F8    &kp F9     &kp F10  &kp F11
-&bt BT_PRV       &bt BT_NXT       &trans           &trans           &trans     &trans     &mmv MOVE_UP     &kp PG_UP  &kp END   &kp UP    &kp HOME   &trans   &kp F12
-&rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &rgb_ug RGB_SPI  &trans           &trans     &trans     &mmv MOVE_DOWN   &kp PG_DN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans   &kp INS
-&rgb_ug RGB_ON   &rgb_ug RGB_OFF  &rgb_ug RGB_SPD  &rgb_ug RGB_HUD  &rgb_ug RGB_HUI &trans     &mmv MOVE_LEFT   &trans     &trans    &trans    &trans     &trans   &trans
-&kp C_PP         &rgb_ug RGB_SAD  &rgb_ug RGB_SAI  &trans           &trans     &trans     &mmv MOVE_RIGHT  &trans     &trans    &trans    &trans     &trans
+&kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6     &mkp LCLK        &trans     &kp F7    &kp F8    &kp F9     &kp F10  &kp F11
+&bt BT_PRV       &bt BT_NXT       &trans           &trans           &trans           &trans     &mmv MOVE_UP     &kp PG_UP  &kp END   &kp UP    &kp HOME   &trans   &kp F12
+&rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &rgb_ug RGB_SPI  &trans           &trans           &trans     &mmv MOVE_DOWN   &kp PG_DN  &kp LEFT  &kp DOWN  &kp RIGHT  &trans   &kp INS
+&rgb_ug RGB_ON   &rgb_ug RGB_OFF  &rgb_ug RGB_SPD  &rgb_ug RGB_HUD  &rgb_ug RGB_HUI  &trans     &mmv MOVE_LEFT   &trans     &trans    &trans    &trans     &trans   &trans
+&kp C_PP         &rgb_ug RGB_SAD  &rgb_ug RGB_SAI  &trans           &trans           &trans     &mmv MOVE_RIGHT  &trans     &trans    &trans    &trans     &trans
             >;
         };
 
         // Layer 2: Accents
-        // 5-Way: Mouse Move + Left Click (Same as L1)
         layer_2 {
             display-name = "ACCENTS";
             sensor-bindings = <&scroll_encoder>;
